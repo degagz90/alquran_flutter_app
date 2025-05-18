@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../data/models/quran_model.dart';
 import 'package:intl/intl.dart';
+
+import '../../../data/models/quran_model.dart';
 
 class ViewSurah extends StatelessWidget {
   final List<Surah> listSurah;

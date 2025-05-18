@@ -4,6 +4,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/quran/bindings/quran_binding.dart';
 import '../modules/quran/views/quran_view.dart';
+import '../modules/surah/bindings/surah_binding.dart';
+import '../modules/surah/views/surah_view.dart';
 
 part 'app_routes.dart';
 
@@ -22,6 +24,11 @@ class AppPages {
       name: _Paths.QURAN,
       page: () => const QuranView(),
       binding: QuranBinding(),
+    ),
+    GetPage(
+      name: _Paths.SURAH,
+      page: () => const SurahView(),
+      binding: SurahBinding(),
     ),
   ];
 }

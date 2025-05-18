@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../widgets/quran_tab.dart';
-import '../widgets/Juz_tab.dart';
 import '../controllers/quran_controller.dart';
+import '../widgets/Juz_tab.dart';
+import '../widgets/quran_tab.dart';
 
 class QuranView extends GetView<QuranController> {
   const QuranView({super.key});
@@ -52,6 +52,7 @@ class QuranView extends GetView<QuranController> {
                           return ViewJuz(
                             item: listJuz,
                             listSurah: controller.quranData,
+                            keyword: 'Juz',
                           );
                         },
                       ),
