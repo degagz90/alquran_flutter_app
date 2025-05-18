@@ -2,6 +2,7 @@
 //
 //     final surah = surahFromJson(jsonString);
 
+import 'package:meta/meta.dart';
 import 'dart:convert';
 
 List<Surah> surahFromJson(String str) =>
