@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../widgets/quran_tab.dart';
+import '../widgets/Juz_tab.dart';
 import '../controllers/quran_controller.dart';
 
 class QuranView extends GetView<QuranController> {
@@ -36,6 +37,7 @@ class QuranView extends GetView<QuranController> {
                         elevation: 3,
                         toolbarHeight: 0,
                         bottom: TabBar(
+                          dividerColor: Colors.grey[300],
                           tabs: [Tab(text: 'Surat'), Tab(text: 'Juz')],
                         ),
                       ),
@@ -44,7 +46,15 @@ class QuranView extends GetView<QuranController> {
                   body: TabBarView(
                     children: [
                       ViewSurah(listSurah: controller.quranData),
-                      Placeholder(),
+                      Builder(
+                        builder: (context) {
+                          final listJuz = controller.findListXml('juz');
+                          return ViewJuz(
+                            item: listJuz,
+                            listSurah: controller.quranData,
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),

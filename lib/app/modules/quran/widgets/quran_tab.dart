@@ -19,7 +19,7 @@ class ViewSurah extends StatelessWidget {
                 print(listSurah[index].numberOfSurah);
               },
               leading: CircleAvatar(
-                backgroundImage: AssetImage('assets/images/.png'),
+                backgroundImage: AssetImage('assets/images/surah_number.png'),
                 child: Text(
                   NumberFormat.decimalPattern(
                     'EN',
@@ -47,7 +47,7 @@ class ViewSurah extends StatelessWidget {
                 ],
               ),
               subtitle: Text(
-                '${listSurah[index].type.name.capitalizeFirst} : ${listSurah[index].numberOfAyah} Ayat',
+                '${listSurah[index].type.name.capitalizeFirst} • ${listSurah[index].numberOfAyah} Ayat',
                 style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
               ),
               trailing: Text(
