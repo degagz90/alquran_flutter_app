@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:quran/app/routes/app_pages.dart';
+import 'package:get/get.dart';
 
 import '../../../data/models/quran_model.dart';
 
 class ViewJuz extends StatelessWidget {
-  final List<Map<String, int>> item;
+  final List<Map<String, int>> item; //juz, manzil, dll
   final List<Surah> listSurah;
   final String keyword;
   const ViewJuz({
@@ -21,11 +23,17 @@ class ViewJuz extends StatelessWidget {
         return ListView.builder(
           itemCount: item.length,
           itemBuilder: (context, index) {
-            final indexSurah = listSurah.indexWhere(
-              (surah) => surah.numberOfSurah == item[index]['sura'],
-            );
+            final indexSurah = item[index]['sura']! - 1;
             return ListTile(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(
+                  Routes.SURAH,
+                  arguments: {
+                    'surahNumb': item[index]['sura'],
+                    'ayahNumb': item[index]['aya'],
+                  },
+                );
+              },
               isThreeLine: true,
               style: ListTileStyle.list,
               titleAlignment: ListTileTitleAlignment.center,
@@ -47,14 +55,8 @@ class ViewJuz extends StatelessWidget {
                 '$keyword ${item[index]['index']}',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Mulai dari:', style: TextStyle(fontSize: 12)),
-                  Text(
-                    '${listSurah[indexSurah].name} - Ayat: ${item[index]['aya']}',
-                  ),
-                ],
+              subtitle: Text(
+                'Mulai dari: ${listSurah[indexSurah].name} - Ayat: ${item[index]['aya']}',
               ),
               trailing: Icon(
                 Icons.navigate_next_rounded,

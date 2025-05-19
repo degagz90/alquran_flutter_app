@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:quran/app/routes/app_pages.dart';
 
 import '../../../data/models/quran_model.dart';
 
@@ -17,7 +18,11 @@ class ViewSurah extends StatelessWidget {
           children: [
             ListTile(
               onTap: () {
-                print(listSurah[index].numberOfSurah);
+                final int surahNumb = listSurah[index].numberOfSurah;
+                Get.toNamed(
+                  Routes.SURAH,
+                  arguments: {'surahNumb': surahNumb, 'ayahNumb': 1},
+                );
               },
               leading: CircleAvatar(
                 backgroundImage: AssetImage('assets/images/surah_number.png'),

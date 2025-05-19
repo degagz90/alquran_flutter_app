@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/quran_controller.dart';
-import '../widgets/Juz_tab.dart';
+import '../widgets/custom_tab.dart';
 import '../widgets/quran_tab.dart';
 
 class QuranView extends GetView<QuranController> {
