@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:quran/app/modules/surah/controllers/surah_controller.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
 import '../../../data/models/quran_model.dart';
 
 class AyahWidgets extends StatelessWidget {
+  final controller = Get.find<SurahController>();
   final Surah surah;
-  final AutoScrollController scrollC;
-  const AyahWidgets({required this.surah, required this.scrollC, super.key});
-
+  AyahWidgets({required this.surah, super.key});
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
       itemCount: surah.verses.length,
-      controller: scrollC,
+      controller: controller.scrollC,
       separatorBuilder: (context, index) => Divider(thickness: 3),
       itemBuilder: (context, index) {
-        var tafsirVisible = false.obs;
+        final formater = NumberFormat('000');
+        final String ayatAudioUrl =
+            'https://static.qurano.com/dist/audio/${formater.format(surah.numberOfSurah)}${formater.format(surah.verses[index].number)}.mp3';
         return AutoScrollTag(
-          controller: scrollC,
+          controller: controller.scrollC,
           key: ValueKey(index),
           index: index,
           highlightColor: Colors.deepPurple.withAlpha(100),
@@ -65,10 +67,21 @@ class AyahWidgets extends StatelessWidget {
                     Row(
                       children: [
                         SizedBox(width: 10),
+
                         IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.play_circle_outline),
+                          onPressed: () {
+                            controller.playAudio(ayatAudioUrl, index);
+                          },
+                          icon: Obx(
+                            () => Icon(
+                              controller.playingAyahIndex.value == index &&
+                                      controller.isPlaying.value
+                                  ? Icons.pause
+                                  : Icons.play_arrow,
+                            ),
+                          ),
                         ),
+
                         IconButton(onPressed: () {}, icon: Icon(Icons.copy)),
                         IconButton(
                           onPressed: () {},
@@ -81,7 +94,8 @@ class AyahWidgets extends StatelessWidget {
                       width: 100,
                       child: TextButton.icon(
                         onPressed: () {
-                          tafsirVisible.value = !tafsirVisible.value;
+                          controller.tafsirVisibleList[index].value =
+                              !controller.tafsirVisibleList[index].value;
                         },
                         iconAlignment: IconAlignment.end,
                         label: Text('Tafsir:'),
@@ -93,7 +107,7 @@ class AyahWidgets extends StatelessWidget {
               ),
               Obx(
                 () => Visibility(
-                  visible: tafsirVisible.value,
+                  visible: controller.tafsirVisibleList[index].value,
                   child: Container(
                     padding: EdgeInsets.all(8),
                     child: Column(
@@ -104,7 +118,8 @@ class AyahWidgets extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {
-                            tafsirVisible.value = !tafsirVisible.value;
+                            controller.tafsirVisibleList[index].value =
+                                !controller.tafsirVisibleList[index].value;
                           },
                           child: Text('(Close)'),
                         ),

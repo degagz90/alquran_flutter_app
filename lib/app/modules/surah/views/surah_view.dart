@@ -15,7 +15,6 @@ class SurahView extends GetView<SurahController> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(body: Center(child: CircularProgressIndicator()));
         }
-
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
           controller.ScrollToAyat(controller.currentAyahNumb - 1);
         });
@@ -25,13 +24,17 @@ class SurahView extends GetView<SurahController> {
             initialPage: controller.currentSurahNumb - 1,
           ),
           itemCount: controller.quranData.length,
-          onPageChanged: (index) {
+          onPageChanged: (index) async {
+            await controller.player.stop();
+            controller.isPlaying.value = false;
+            controller.playingAyahIndex.value = -1;
             controller.currentSurahNumb = index + 1;
             controller.currentAyahNumb = 1;
             controller.update();
           },
           itemBuilder: (context, index) {
             final surah = controller.quranData[index];
+            controller.initTafsirVisibility(surah.verses.length);
             return Scaffold(
               appBar: AppBar(
                 elevation: 10,
@@ -43,12 +46,7 @@ class SurahView extends GetView<SurahController> {
                   children: [
                     SurahCard(surah: surah),
                     Divider(thickness: 3),
-                    Expanded(
-                      child: AyahWidgets(
-                        surah: surah,
-                        scrollC: controller.scrollC,
-                      ),
-                    ),
+                    Expanded(child: AyahWidgets(surah: surah)),
                   ],
                 ),
               ),
